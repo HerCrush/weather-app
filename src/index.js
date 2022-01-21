@@ -19,25 +19,35 @@ const parseWeather = function(fetchedData) {
 }
 
 const displayWeather = function(weather) {
-  const city = document.createElement('h1');
-  const status = document.createElement('h3');
-  const temperature = document.createElement('h4');
-  const humidity = document.createElement('h5');
+  const city = document.querySelector('h1');
+  const status = document.querySelector('h2');
+  const temperature = document.querySelector('h3');
+  const humidity = document.querySelector('h4');
   city.textContent = `${weather.name} (${weather.country})`;
   status.textContent = weather.status;
   temperature.textContent = weather.temperature;
   humidity.textContent = weather.humidity;
   const container = document.querySelector('main');
+  container.id = weather.status;
   container.append(city, status, temperature, humidity);
 }
 
+const input = document.querySelector('input');
 const getWeather = function() {
-  const input = document.querySelector('input');
   fetchWeather(input.value)
     .then(function(data) {
       displayWeather(parseWeather(data));
+    })
+    .catch(function() {
+      alert('Please, enter a valid city.');  // I could do better but I don't want to spend much time in this for now.
     });
 }
+
+input.addEventListener('keydown', function(event) {
+  if(event.key === 'Enter') {
+    getWeather();
+  }
+});
 
 const button = document.querySelector('button');
 button.addEventListener('click', getWeather);

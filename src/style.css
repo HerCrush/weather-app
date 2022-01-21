@@ -1,3 +1,54 @@
+input:focus {
+  outline: none;
+}
+
 body {
+  padding: 5% 1%;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Lucida Console', monospace;
+}
+
+div {
+  margin: auto;
+  display: flex;
+}
+
+main {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5%;
+}
+
+input {
+  font-size: 14pt;
+  font-family: 'Lucida Console', monospace;
+}
+
+button {
+  font-family: 'Arial', sans-serif;
+  font-size: 18pt;
   padding: 1%;
+}
+
+h1 {
+  padding: 5% 0;
+  font-size: 24pt;
+}
+
+h2 {
+  padding: 5% 0;
+  font-size: 18pt;
+}
+
+h3 {
+  padding: 5% 0;
+  font-size: 18pt;
+}
+
+h4 {
+  padding: 5% 0;
+  font-size: 18pt;
 }
