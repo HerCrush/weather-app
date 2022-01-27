@@ -52,3 +52,19 @@ h4 {
   padding: 5% 0;
   font-size: 18pt;
 }
+
+body[data-weather="Thunderstorm"][data-time="d"] {
+  background-color: grey;
+}
+
+body[data-weather="Thunderstorm"][data-time="n"] {
+  background-color: rgb(58, 58, 58);
+}
+
+body[data-weather="Drizzle"][data-time="d"], body[data-weather="Clouds"][data-time="d"] {
+  background-color: lightgrey;
+}
+
+body[data-weather="Clear"][data-time="d"] {
+  background-color: lightskyblue;
+}

@@ -14,6 +14,8 @@ const parseWeather = function(fetchedData) {
     status: fetchedData.weather[0].main,
     temperature: fetchedData.main.temp,
     humidity: fetchedData.main.humidity,
+    icon: fetchedData.weather[0].icon,
+    timeOfDay: fetchedData.weather[0].icon.slice(-1)
   };
   return weatherData;
 }
@@ -23,13 +25,14 @@ const displayWeather = function(weather) {
   const status = document.querySelector('h2');
   const temperature = document.querySelector('h3');
   const humidity = document.querySelector('h4');
+  const icon = document.querySelector('#weather-icon');
   city.textContent = `${weather.name} (${weather.country})`;
   status.textContent = weather.status;
   temperature.textContent = weather.temperature;
   humidity.textContent = weather.humidity;
-  const container = document.querySelector('main');
-  container.id = weather.status;
-  container.append(city, status, temperature, humidity);
+  icon.src = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`;
+  document.body.dataset.weather = weather.status;
+  document.body.dataset.time = weather.timeOfDay;
 }
 
 const input = document.querySelector('input');
@@ -39,7 +42,7 @@ const getWeather = function() {
       displayWeather(parseWeather(data));
     })
     .catch(function() {
-      alert('Please, enter a valid city.');  // I could do better but I don't want to spend much time in this for now.
+      alert('Please, enter a valid city.');  // I could do better but I don't want to spend much time on this for now.
     });
 }
 
