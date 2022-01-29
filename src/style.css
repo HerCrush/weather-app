@@ -99,3 +99,15 @@ body[data-weather="Clear"][data-time="n"] {
 .hidden {
   opacity: 0%;
 }
+
+#unit {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: 28pt;
+  width: 2em;
+  height: 2em;
+  padding: 0;
+  border: solid black 3px;
+  border-radius: 10px;
+}

@@ -4,8 +4,8 @@ import icon1 from './black-24dp/2x/outline_refresh_black_24dp.png';
 
 const loadingIcon = document.querySelector('#loading');
 loadingIcon.src = icon1;
-const fetchWeather = async function(city) {
-  const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=433cc5baf54233a15ed6c8c968fd822c`, {mode: 'cors'});
+const fetchWeather = async function(city, unit) {
+  const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=433cc5baf54233a15ed6c8c968fd822c&units=${unit}`, {mode: 'cors'});
   const fetchedData = await response.json();
   return fetchedData;
 }
@@ -23,6 +23,7 @@ const parseWeather = function(fetchedData) {
   return weatherData;
 }
 
+const unit = document.querySelector('#unit');
 const displayWeather = function(weather) {
   const city = document.querySelector('h1');
   const status = document.querySelector('h2');
@@ -31,8 +32,8 @@ const displayWeather = function(weather) {
   const icon = document.querySelector('#weather-icon');
   city.textContent = `${weather.name} (${weather.country})`;
   status.textContent = weather.status;
-  temperature.textContent = weather.temperature;
-  humidity.textContent = weather.humidity;
+  temperature.textContent = `${weather.temperature}${unit.textContent}`;
+  humidity.textContent = `${weather.humidity}%`;
   icon.src = `http://openweathermap.org/img/wn/${weather.icon}@2x.png`;
   document.body.dataset.weather = weather.status;
   document.body.dataset.time = weather.timeOfDay;
@@ -41,7 +42,7 @@ const displayWeather = function(weather) {
 const input = document.querySelector('input');
 const getWeather = function() {
   loadingIcon.classList.remove('hidden');
-  fetchWeather(input.value)
+  fetchWeather(input.value, unit.value)
     .then(function(data) {
       loadingIcon.classList.add('hidden');
       displayWeather(parseWeather(data));
@@ -58,5 +59,28 @@ input.addEventListener('keydown', function(event) {
   }
 });
 
+const toFahrenheit = function(number) {
+  return Math.round((1.8*number+32)*100)/100;
+}
+
+const toCelsius = function(number) {
+  return Math.round(((number-32)/1.8)*100)/100;
+}
+
+const changeUnits = function(event) {
+  const temperature = document.querySelector('h3');
+  if(event.target.value === 'metric') {
+    event.target.value = 'imperial';
+    event.target.textContent = 'ºF'
+    temperature.textContent = `${toFahrenheit(temperature.textContent.slice(0, -2))}ºF`;
+  }
+  else if(event.target.value === 'imperial') {
+    event.target.value = 'metric';
+    event.target.textContent = 'ºC';
+    temperature.textContent = `${toCelsius(temperature.textContent.slice(0, -2))}ºC`;
+  }
+}
+
+unit.addEventListener('click', changeUnits);
 const button = document.querySelector('button');
 button.addEventListener('click', getWeather);
